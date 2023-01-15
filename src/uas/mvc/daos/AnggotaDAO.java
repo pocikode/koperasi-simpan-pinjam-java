@@ -24,12 +24,12 @@ public class AnggotaDAO extends BaseDAO {
             session.beginTransaction();
             SaldoAnggota saldo = anggota.getSaldoAnggota();
             Long id = (Long) session.save(anggota);
-            
+
             if (saldo != null) {
                 saldo.setAnggota(anggota);
                 session.saveOrUpdate(saldo);
             }
-            
+
             session.getTransaction().commit();
             return id != null;
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class AnggotaDAO extends BaseDAO {
 
         return false;
     }
-    
+
     public Anggota getAnggotaByNIK(Long nik) {
         try {
             this.openSession();
@@ -95,6 +95,21 @@ public class AnggotaDAO extends BaseDAO {
         try {
             this.openSession();
             return session.createQuery("FROM Anggota", Anggota.class).list();
+        } catch (Exception e) {
+            Logger.getLogger(AnggotaDAO.class.getName()).log(Level.SEVERE, null, e);
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public Long getTotalAnggota() {
+        try {
+            this.openSession();
+            Query query = session.createQuery("SELECT COUNT(*) FROM Anggota a");
+
+            return (Long) query.getSingleResult();
         } catch (Exception e) {
             Logger.getLogger(AnggotaDAO.class.getName()).log(Level.SEVERE, null, e);
             session.getTransaction().rollback();

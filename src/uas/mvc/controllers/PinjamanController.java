@@ -15,6 +15,7 @@ import uas.mvc.utils.HibernateUtil;
  * @author agus
  */
 public class PinjamanController {
+
     private PinjamanDAO dao;
 
     public PinjamanController() {
@@ -24,7 +25,7 @@ public class PinjamanController {
     private void setDAO() {
         dao = new PinjamanDAO(HibernateUtil.getSessionFactory());
     }
-    
+
     public void setDML(Pinjaman pinjaman, CRUD c) {
         switch (c) {
             case CREATE:
@@ -38,12 +39,16 @@ public class PinjamanController {
                 break;
         }
     }
-    
+
     public List<Pinjaman> fetchPinjaman() {
         return dao.fetchPinjaman();
     }
-    
+
     public Pinjaman getPinjamanBelumLuasByAnggota(Anggota anggota) {
         return dao.getPinjamanBelumLuasByAnggota(anggota);
+    }
+
+    public Long getTotalPinjaman() {
+        return dao.getTotalPinjaman();
     }
 }

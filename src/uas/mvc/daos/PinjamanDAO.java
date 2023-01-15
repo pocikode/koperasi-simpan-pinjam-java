@@ -65,7 +65,7 @@ public class PinjamanDAO extends BaseDAO {
             this.openSession();
             Query q = session.createQuery("FROM Pinjaman p WHERE p.anggota=:nik AND p.status=:status");
             q.setParameter("nik", anggota)
-             .setParameter("status", Pinjaman.PinjamanStatus.BELUM_LUNAS);
+                    .setParameter("status", Pinjaman.PinjamanStatus.BELUM_LUNAS);
 
             return (Pinjaman) q.uniqueResult();
         } catch (Exception e) {
@@ -98,6 +98,21 @@ public class PinjamanDAO extends BaseDAO {
         try {
             this.openSession();
             return session.createQuery("FROM Pinjaman", Pinjaman.class).list();
+        } catch (Exception e) {
+            Logger.getLogger(PinjamanDAO.class.getName()).log(Level.SEVERE, null, e);
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public Long getTotalPinjaman() {
+        try {
+            this.openSession();
+            Query query = session.createQuery("SELECT SUM(jumlah) FROM Pinjaman p");
+
+            return (Long) query.getSingleResult();
         } catch (Exception e) {
             Logger.getLogger(PinjamanDAO.class.getName()).log(Level.SEVERE, null, e);
             session.getTransaction().rollback();

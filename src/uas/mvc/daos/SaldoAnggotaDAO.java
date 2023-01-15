@@ -65,4 +65,19 @@ public class SaldoAnggotaDAO extends BaseDAO {
 
         return null;
     }
+    
+    public Long getTotalSaldoSimpananAnggota() {
+        try {
+            this.openSession();
+            Query query = session.createQuery("SELECT SUM(saldo_simpanan) FROM SaldoAnggota sa");
+
+            return (Long) query.getSingleResult();
+        } catch (Exception e) {
+            Logger.getLogger(AnggotaDAO.class.getName()).log(Level.SEVERE, null, e);
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
 }

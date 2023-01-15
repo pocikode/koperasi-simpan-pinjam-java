@@ -4,14 +4,28 @@ import uas.mvc.utils.Model_Card;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import uas.mvc.controllers.AnggotaController;
+import uas.mvc.controllers.PinjamanController;
+import uas.mvc.utils.Helpers;
 
 public class Dashboard extends javax.swing.JPanel {
 
+    private final AnggotaController anggotaController = new AnggotaController();
+    private final PinjamanController pinjamanController = new PinjamanController();
+
     public Dashboard() {
         initComponents();
-        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_anggota.png")), "Total Anggota", "666"));
-        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_pinjaman.png")), "Total Pinjaman", "Rp 150.000.000"));
-        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_simpanan.png")), "Total Simpanan", "Rp 235.000.000"));
+        
+        String totalAnggota = anggotaController.getTotalAnggota() + "";
+        
+        String totalSimpanan = Helpers.formatRupiah(anggotaController.getTotalSaldoSimpananAnggota());
+        totalSimpanan.replace(",00", "");
+        
+        String totalPinjaman = Helpers.formatRupiah(pinjamanController.getTotalPinjaman());
+        
+        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_anggota.png")), "Total Anggota", totalAnggota));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_pinjaman.png")), "Total Pinjaman", totalPinjaman));
+        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/uas/mvc/images/card_simpanan.png")), "Total Simpanan", totalSimpanan));
 
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
@@ -52,30 +66,42 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Agus Supriyatna - 2021071050");
 
+        card1.setColor1(new java.awt.Color(241, 208, 62));
+        card1.setColor2(new java.awt.Color(211, 184, 61));
+
+        card2.setColor1(new java.awt.Color(142, 142, 250));
+        card2.setColor2(new java.awt.Color(123, 123, 245));
+
+        card3.setColor1(new java.awt.Color(186, 123, 247));
+        card3.setColor2(new java.awt.Color(167, 94, 236));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(562, 562, 562)
                         .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                         .addGap(269, 269, 269))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(27, 27, 27))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,9 +119,9 @@ public class Dashboard extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(71, 71, 71))
         );
     }// </editor-fold>//GEN-END:initComponents
 
