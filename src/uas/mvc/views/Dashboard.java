@@ -8,6 +8,10 @@ import uas.mvc.controllers.AnggotaController;
 import uas.mvc.controllers.PinjamanController;
 import uas.mvc.utils.Helpers;
 
+/**
+ *
+ * @author agus
+ */
 public class Dashboard extends javax.swing.JPanel {
 
     private final AnggotaController anggotaController = new AnggotaController();

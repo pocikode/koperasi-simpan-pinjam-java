@@ -7,6 +7,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+/**
+ *
+ * @author agus
+ */
 public class MenuItem extends javax.swing.JPanel {
 
     private boolean selected;
